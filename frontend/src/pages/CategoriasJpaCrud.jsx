@@ -203,23 +203,23 @@ export default function CategoriasJpaCrud() {
 
   return (
     <div className="container mx-auto p-6 max-w-6xl">
-      {/* Banner Informativo de Retos SENA */}
-      <div className="bg-slate-900 text-white p-6 rounded-xl shadow-xl mb-8 border-l-8 border-indigo-500">
+      {/* Banner Informativo de Retos SENA (Tema Morado) */}
+      <div className="bg-purple-950 text-white p-6 rounded-xl shadow-xl mb-8 border-l-8 border-purple-500">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-2xl font-extrabold tracking-tight flex items-center gap-2 text-indigo-300">
-              🚀 RETOS SENA ADSO: Microservicio JPA + Paginación
+            <h1 className="text-2xl font-extrabold tracking-tight flex items-center gap-2 text-purple-200">
+              💜 RETOS SENA ADSO: Microservicio JPA + Paginación
             </h1>
-            <p className="text-slate-300 text-sm mt-1">
-              Servidor 2 (<code className="text-amber-400 font-mono">http://localhost:8081</code>) | 
+            <p className="text-purple-300 text-sm mt-1">
+              Servidor 2 (<code className="text-amber-300 font-mono">http://localhost:8081</code>) | 
               Spring Data JPA + Rate Limiting + Anti-SQLi
             </p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-semibold">
-            <span className="bg-amber-800 text-amber-200 px-3 py-1 rounded-full border border-amber-600">
+            <span className="bg-purple-800 text-purple-200 px-3 py-1 rounded-full border border-purple-600">
               ⚡ Rate Limit (60/min)
             </span>
-            <span className="bg-indigo-800 text-indigo-200 px-3 py-1 rounded-full border border-indigo-600">
+            <span className="bg-purple-800 text-purple-200 px-3 py-1 rounded-full border border-purple-600">
               🔒 5+ Validaciones @Valid
             </span>
           </div>

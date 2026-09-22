@@ -1,5 +1,5 @@
 /* ======================================================
-   WorkInX - Estilos Exclusivos para Módulo de Entrevistas JPA
+   WorkInX - Estilos Exclusivos para Módulo de Entrevistas JPA (Tema Morado Violeta)
    ====================================================== */
 
 .jpa-module-container {
@@ -19,14 +19,14 @@
   }
 }
 
-/* Hero Header Card */
+/* Hero Header Card - Tema Morado Radiante */
 .jpa-hero-card {
-  background: linear-gradient(135deg, #0f172a 0%, #0b4db8 55%, #1e1b4b 100%);
+  background: linear-gradient(135deg, #2e1065 0%, #6d28d9 55%, #7c3aed 100%);
   border-radius: 20px;
   padding: 24px 30px;
   color: #ffffff;
-  box-shadow: 0 14px 30px -10px rgba(11, 77, 184, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 30px -10px rgba(109, 40, 217, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
 }
@@ -38,7 +38,7 @@
   right: -15%;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -54,7 +54,7 @@
 }
 
 .jpa-hero-subtitle {
-  color: #cbd5e1;
+  color: #e9d5ff;
   font-size: 0.84rem;
   margin-top: 4px;
 }
@@ -64,8 +64,8 @@
   background: #ffffff;
   border-radius: 18px;
   padding: 22px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+  border: 1px solid #f3e8ff;
+  box-shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.08);
 }
 
 .jpa-card-header {
@@ -74,13 +74,13 @@
   justify-content: space-between;
   padding-bottom: 14px;
   margin-bottom: 16px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f3e8ff;
 }
 
 .jpa-card-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #3b0764;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -99,7 +99,7 @@
   justify-content: space-between;
   gap: 16px;
   animation: slideNotice 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10px 25px -5px rgba(109, 40, 217, 0.12);
   position: relative;
   overflow: hidden;
 }
@@ -116,15 +116,15 @@
 }
 
 .jpa-alert-error {
-  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
-  border: 1px solid #fecdd3;
-  color: #9f1239;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  border: 1px solid #e9d5ff;
+  color: #6b21a8;
 }
 
 .jpa-alert-success {
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-  border: 1px solid #a7f3d0;
-  color: #065f46;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  border: 1px solid #d8b4fe;
+  color: #581c87;
 }
 
 .jpa-alert-icon-box {
@@ -139,15 +139,15 @@
 }
 
 .jpa-alert-error .jpa-alert-icon-box {
-  background: #ffe4e6;
-  color: #e11d48;
-  border: 1px solid #fca5a5;
+  background: #f3e8ff;
+  color: #9333ea;
+  border: 1px solid #d8b4fe;
 }
 
 .jpa-alert-success .jpa-alert-icon-box {
-  background: #d1fae5;
-  color: #10b981;
-  border: 1px solid #6ee7b7;
+  background: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #c084fc;
 }
 
 .jpa-alert-content {
@@ -172,13 +172,13 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(126, 34, 206, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #64748b;
+  color: #7e22ce;
   font-size: 14px;
   font-weight: 700;
   transition: all 0.2s ease;
@@ -187,7 +187,7 @@
 
 .jpa-alert-close:hover {
   background: #ffffff;
-  color: #0f172a;
+  color: #3b0764;
   transform: scale(1.08);
 }
 
@@ -195,34 +195,34 @@
 .jpa-input, .jpa-select, .jpa-textarea {
   width: 100%;
   padding: 9px 13px;
-  background-color: #f8fafc;
-  border: 1.5px solid #e2e8f0;
+  background-color: #faf5ff;
+  border: 1.5px solid #e9d5ff;
   border-radius: 10px;
   font-size: 0.82rem;
-  color: #1e293b;
+  color: #3b0764;
   outline: none;
   transition: all 0.2s ease;
 }
 
 .jpa-input:focus, .jpa-select:focus, .jpa-textarea:focus {
   background-color: #ffffff;
-  border-color: #0b4db8;
-  box-shadow: 0 0 0 3px rgba(11, 77, 184, 0.12);
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
 }
 
 .jpa-label {
   display: block;
   font-size: 0.74rem;
   font-weight: 600;
-  color: #475569;
+  color: #581c87;
   margin-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
-/* Botones */
+/* Botones Morados */
 .jpa-btn-primary {
-  background: linear-gradient(135deg, #0b4db8 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
   color: #ffffff;
   padding: 9px 18px;
   border-radius: 9px;
@@ -230,7 +230,7 @@
   font-size: 0.82rem;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(11, 77, 184, 0.22);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -239,32 +239,32 @@
 }
 
 .jpa-btn-primary:hover {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(11, 77, 184, 0.3);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
 }
 
 .jpa-btn-secondary {
-  background: #f1f5f9;
-  color: #475569;
+  background: #f3e8ff;
+  color: #6b21a8;
   padding: 9px 14px;
   border-radius: 9px;
   font-weight: 600;
   font-size: 0.82rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e9d5ff;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .jpa-btn-secondary:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: #e9d5ff;
+  color: #3b0764;
 }
 
 /* Filter Bar Section */
 .jpa-filter-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 18px;
@@ -279,24 +279,24 @@
 }
 
 .jpa-table th {
-  background: #f8fafc;
-  color: #64748b;
+  background: #faf5ff;
+  color: #6b21a8;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   padding: 10px 14px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid #e9d5ff;
 }
 
 .jpa-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #334155;
+  border-bottom: 1px solid #f3e8ff;
+  color: #3b0764;
 }
 
 .jpa-table tr:hover td {
-  background-color: #f8fafc;
+  background-color: #faf5ff;
 }
 
 /* Badges de Estado */
@@ -312,9 +312,9 @@
 }
 
 .jpa-badge-publicada {
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
+  background: #f3e8ff;
+  color: #6b21a8;
+  border: 1px solid #d8b4fe;
 }
 
 .jpa-badge-pausada {
@@ -329,30 +329,30 @@
   border: 1px solid #fecdd3;
 }
 
-/* Paginador */
+/* Paginador Morado */
 .jpa-page-btn {
   padding: 5px 12px;
   border-radius: 8px;
   font-size: 0.78rem;
   font-weight: 600;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e9d5ff;
   background: #ffffff;
-  color: #475569;
+  color: #6b21a8;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .jpa-page-btn:hover:not(:disabled) {
-  background: #f1f5f9;
-  color: #0b4db8;
-  border-color: #0b4db8;
+  background: #f3e8ff;
+  color: #7c3aed;
+  border-color: #7c3aed;
 }
 
 .jpa-page-btn.active {
-  background: #0b4db8;
+  background: #7c3aed;
   color: #ffffff;
-  border-color: #0b4db8;
-  box-shadow: 0 3px 8px rgba(11, 77, 184, 0.25);
+  border-color: #7c3aed;
+  box-shadow: 0 3px 8px rgba(124, 58, 237, 0.35);
 }
 
 .jpa-page-btn:disabled {
