@@ -1457,6 +1457,8 @@ main {
   gap: 24px;
   cursor: pointer;
   transition: 0.25s ease;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .interview-card:hover {
@@ -1805,6 +1807,8 @@ main {
   padding: 32px;
   border-radius: 28px;
   box-shadow: 0 18px 50px rgba(20, 35, 70, 0.1);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .detail-card h2,
@@ -2432,6 +2436,8 @@ main {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 24px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .company-post-category {
@@ -3021,6 +3027,8 @@ main {
   grid-template-columns: 1fr auto;
   gap: 24px;
   background: #f8fbff;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .applicant-main {
@@ -3074,6 +3082,7 @@ main {
 
 .applicant-actions {
   min-width: 170px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -3091,4 +3100,405 @@ main {
   .applicant-actions {
     min-width: 100%;
   }
+}
+
+/* --- MAPAS INTERACTIVOS --- */
+
+.mapa-picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapa-picker-modal {
+  background: #ffffff;
+  width: 90%;
+  max-width: 600px;
+  padding: 24px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.mapa-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #172033;
+}
+
+.mapa-picker-header div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mapa-picker-header svg {
+  color: #0b4db8;
+}
+
+.mapa-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #667085;
+  transition: 0.2s ease;
+}
+
+.mapa-close-btn:hover {
+  color: #dc2626;
+}
+
+.mapa-search-bar {
+  display: flex;
+  gap: 12px;
+}
+
+.mapa-search-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.mapa-search-input:focus {
+  border-color: #0b4db8;
+  box-shadow: 0 0 0 4px rgba(11, 77, 184, 0.1);
+}
+
+.mapa-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: #0b4db8;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.mapa-search-btn:hover {
+  background: #083f96;
+}
+
+.mapa-search-btn:disabled {
+  background: #98a2b3;
+  cursor: not-allowed;
+}
+
+.mapa-hint {
+  font-size: 0.95rem;
+  color: #667085;
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.mapa-container {
+  width: 100%;
+  height: 350px;
+  border-radius: 14px;
+  border: 1px solid #d0d5dd;
+  z-index: 1;
+}
+
+.mapa-direccion-seleccionada {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e40af;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mapa-picker-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.mapa-picker-actions .back-button {
+  width: fit-content;
+  padding: 0 20px;
+}
+
+.mapa-picker-actions .auth-button {
+  width: fit-content;
+  margin: 0;
+  padding: 0 24px;
+}
+
+.mapa-vista-wrapper {
+  margin-top: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mapa-vista-container {
+  width: 100%;
+  height: 250px;
+  z-index: 1;
+}
+
+.mapa-vista-footer {
+  background: #f8fafc;
+  padding: 10px;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-align: center;
+  margin: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.mapa-picker-trigger {
+  margin-top: -8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mapa-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  color: #0b4db8;
+  border: 1px solid #bfdbfe;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+.mapa-btn:hover {
+  background: #dbeafe;
+}
+
+.mapa-btn svg {
+  color: inherit;
+}
+
+.mapa-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.mapa-clear-btn:hover {
+  background: #fee2e2;
+}
+
+/* --- WIZARD Y COMPONENTES NUEVOS --- */
+
+.page-wizard-container {
+  padding: 60px 20px 80px 20px;
+  min-height: calc(100vh - 120px);
+  background: #f8fafc;
+}
+
+.btn-back-link:hover {
+  color: #0b4db8 !important;
+}
+
+.wizard-modal {
+  max-width: 700px !important;
+}
+
+.wizard-header {
+  margin-bottom: 24px !important;
+}
+
+.wizard-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  transition: 0.3s ease;
+}
+
+.progress-bar.active {
+  background: #0b4db8;
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.categorias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cat-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #f8fafc;
+  transition: 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475467;
+}
+
+.cat-checkbox:hover {
+  border-color: #9db7f5;
+  background: #eff6ff;
+}
+
+.cat-checkbox.cat-selected {
+  background: #eff6ff;
+  border-color: #0b4db8;
+  color: #0b4db8;
+}
+
+.cat-checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: #0b4db8;
+}
+
+.pills-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.pill-btn {
+  padding: 12px 20px;
+  border: 1px solid #d0d5dd;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #475467;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pill-btn:hover {
+  border-color: #9db7f5;
+  background: #f8fafc;
+}
+
+.pill-btn.pill-active {
+  background: #0b4db8;
+  border-color: #0b4db8;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(11, 77, 184, 0.2);
+}
+
+.datepicker-wrapper {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.custom-datepicker {
+  width: 100%;
+  height: 54px;
+  padding: 0 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.custom-datepicker:focus {
+  border-color: #0b4db8;
+  box-shadow: 0 0 0 4px rgba(11, 77, 184, 0.13);
+}
+
+/* Fix z-index for react-datepicker popup */
+.react-datepicker-popper {
+  z-index: 1050 !important;
+}
+
+.react-datepicker__header {
+  background-color: #eff6ff !important;
+  border-bottom: 1px solid #bfdbfe !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #0b4db8 !important;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: #0b4db8 !important;
+}
+
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.wizard-actions .auth-button,
+.wizard-actions .back-button {
+  width: auto;
+  min-width: 140px;
+  padding: 0 24px;
 }
