@@ -34,27 +34,50 @@ El proyecto fue desarrollado utilizando el stack **MERN** (con MySQL en lugar de
 ```text
 WorkInX/
 │
-├── frontend/                # Aplicación cliente (React)
+├── frontend/                # Aplicación cliente (React 19 + Vite)
 │   ├── src/
-│   │   ├── components/      # Componentes reutilizables (Modales, Header, etc.)
-│   │   ├── pages/           # Vistas principales (Home, Entrevistas, Perfil, etc.)
+│   │   ├── assets/          # Imágenes estáticas e íconos del proyecto
+│   │   ├── components/      # Componentes UI organizados
+│   │   │   ├── layout/      # Header, Footer
+│   │   │   └── modals/      # Modales de interacción (Postular, Reportar, etc.)
+│   │   ├── context/         # Estado global (AuthContext)
+│   │   ├── hooks/           # Custom hooks (useAuth)
+│   │   ├── pages/           # Vistas organizadas por dominio
+│   │   │   ├── auth/        # Login, Registro, RegistroEmpresa, RegistroUsuario
+│   │   │   ├── entrevistas/ # Entrevistas, DetalleEntrevista
+│   │   │   ├── perfil/      # PerfilEmpresa, PerfilUsuario
+│   │   │   └── Home.jsx     # Página de inicio
+│   │   ├── services/        # Capa de consumo API (Cliente HTTP, auth, entrevistas, etc.)
 │   │   ├── styles/          # Hojas de estilo globales
-│   │   └── assets/          # Imágenes estáticas e íconos
+│   │   └── utils/           # Formateadores y utilidades de interfaz
 │   └── package.json         # Dependencias del cliente
 │
-├── backend/                 # Servidor API (Node.js)
+├── backend/                 # Servidor API REST (Node.js + Express)
 │   ├── src/
-│   │   ├── config/          # Conexión a DB (db.js)
-│   │   ├── controllers/     # Lógica de negocio (auth, entrevistas, postulaciones)
-│   │   ├── middlewares/     # Interceptores (Validación JWT, Multer)
-│   │   └── routes/          # Definición de endpoints de la API REST
+│   │   ├── config/          # Configuración y conexión a DB con fallbacks
+│   │   ├── controllers/     # Controladores HTTP delgados
+│   │   ├── middlewares/     # Interceptores (Auth JWT, Upload Multer, ErrorHandler)
+│   │   ├── routes/          # Definición de endpoints de la API REST
+│   │   ├── services/        # Lógica de negocio y persistencia en DB
+│   │   └── utils/           # Validadores, constantes y formateadores
 │   └── package.json         # Dependencias del servidor
 │
+├── docs/                   # Documentación oficial del proyecto
+│   ├── MANUAL_TECNICO.md   # Manual Técnico completo (Arquitectura, DB, API, Seguridad)
+│   └── MANUAL_USUARIO.md   # Manual de Usuario paso a paso (Candidatos, Empresas, Visitantes)
+│
 └── database/                # Scripts SQL de inicialización
-    ├── workinx.sql          # Esquema de tablas principal
+    ├── workinx.sql          # Esquema de tablas y vistas principal
     ├── inserts_demo.sql     # Datos semilla (Seeders)
-    └── procedures_triggers.sql # Lógica avanzada en base de datos
+    └── procedures_triggers.sql # Procedimientos y triggers en base de datos
 ```
+
+## 📚 Documentación Oficial del Proyecto
+
+Para la entrega y evaluación técnica en el marco del programa formativo SENA (ADSO), se han elaborado los siguientes manuales detallados:
+
+- 📘 **[Manual Técnico Completo](docs/MANUAL_TECNICO.md)**: Arquitectura del software, diagramas Mermaid, diccionario de datos, catálogo completo de endpoints de la API REST, seguridad, triggers y guía de despliegue.
+- 👥 **[Manual de Usuario](docs/MANUAL_USUARIO.md)**: Guía paso a paso ilustrada para visitantes, candidatos (registro, postulación con CV, seguimiento de estados) y empresas (clasificación empresarial, publicación y gestión de postulantes).
 
 ## 🚀 Guía de Instalación y Ejecución Local
 
@@ -79,7 +102,9 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=tu_contraseña_aqui
 DB_NAME=workinx
+DB_PORT=3306
 JWT_SECRET=tu_secreto_super_seguro
+APP_URL=http://localhost:3000
 ```
 Inicia el servidor en modo desarrollo:
 ```bash
@@ -91,6 +116,13 @@ Abre una nueva terminal en paralelo:
 ```bash
 cd frontend
 npm install
+```
+Crea un archivo llamado `.env` en la raíz de la carpeta `frontend` basado en `.env.example`:
+```env
+VITE_API_URL=http://localhost:3000
+```
+Inicia el servidor de desarrollo:
+```bash
 npm run dev
 ```
 La aplicación abrirá automáticamente en `http://localhost:5173`.
@@ -101,15 +133,27 @@ La aplicación abrirá automáticamente en `http://localhost:5173`.
 
 La API cuenta con endpoints protegidos por JWT. A continuación un resumen:
 
+- **Sistema / Monitoreo:**
+  - `GET /api/health` - Estado de conexión y salud del servidor y la base de datos.
 - **Auth:**
-  - `POST /api/auth/registro/usuario` - Registro de candidatos.
+  - `POST /api/auth/registro-candidato` - Registro de candidatos.
+  - `POST /api/auth/registro-empresa` - Registro de empresas.
   - `POST /api/auth/login` - Autenticación universal.
-  - `GET /api/auth/perfil` - Obtener datos del usuario logueado.
+  - `GET /api/auth/perfil` - (Protegido) Obtener datos del usuario logueado.
 - **Entrevistas:**
   - `GET /api/entrevistas` - Listado con filtros.
-  - `POST /api/entrevistas` - (Protegido) Crear vacante (solo Empresas).
+  - `GET /api/entrevistas/:id` - Detalle de entrevista.
+  - `GET /api/entrevistas/empresa/mis-entrevistas` - (Protegido) Listar entrevistas de la empresa.
+  - `POST /api/entrevistas` - (Protegido) Crear entrevista (solo Empresas).
+  - `PUT /api/entrevistas/:id` - (Protegido) Actualizar entrevista (solo Empresas).
+  - `DELETE /api/entrevistas/:id` - (Protegido) Eliminar entrevista (solo Empresas).
 - **Postulaciones:**
-  - `POST /api/postulaciones` - (Protegido) Aplicar a una entrevista enviando un archivo CV.
+  - `POST /api/postulaciones` - (Protegido) Aplicar a una entrevista con CV (solo Candidatos).
+  - `GET /api/postulaciones/mis-postulaciones` - (Protegido) Listar postulaciones del candidato.
+  - `GET /api/postulaciones/entrevista/:id` - (Protegido) Ver postulantes a una entrevista (solo Empresas).
+  - `PUT /api/postulaciones/:id/estado` - (Protegido) Actualizar estado de postulación (solo Empresas).
+- **Reportes:**
+  - `POST /api/reportes` - (Protegido) Reportar entrevista sospechosa.
 
 ## 🤝 Contribuciones
 Este proyecto fue creado con el objetivo de fomentar el acceso al empleo joven. Siéntete libre de clonarlo, enviar Pull Requests o reportar incidencias (Issues) si encuentras algún problema en la interfaz o la API.

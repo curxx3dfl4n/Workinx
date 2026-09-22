@@ -6,3 +6,9 @@ dist/
 build/
 uploads/
 *.log
+.idea/
+target/
+*.jar
+test.json
+microservicio-jpa/target/
+backend/target/
