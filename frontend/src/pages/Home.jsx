@@ -1,3 +1,11 @@
+/**
+ * @file Home.jsx
+ * @description Vista principal/Landing Page institucional de la plataforma WorkInX.
+ * Presenta la propuesta de valor, sección de beneficios para jóvenes/empresas y acceso directo a convocatorias.
+ * 
+ * @author Equipo WorkInX - SENA ADSO 2026
+ */
+import { Link } from "react-router";
 import {
   Search,
   Building2,
@@ -7,6 +15,10 @@ import {
   UsersRound,
 } from "lucide-react";
 
+/**
+ * Componente funcional de la página de Inicio (Landing Page).
+ * @returns {JSX.Element} Pantalla principal Home
+ */
 function Home() {
   return (
     <>
@@ -27,13 +39,13 @@ function Home() {
             </p>
 
             <div className="hero-actions">
-              <a href="/entrevistas" className="primary-button">
+              <Link to="/entrevistas" className="primary-button">
                 Buscar entrevistas
-              </a>
+              </Link>
 
-              <a href="/registro" className="secondary-button">
+              <Link to="/registro" className="secondary-button">
                 Crear cuenta
-              </a>
+              </Link>
             </div>
           </div>
         </div>
