@@ -1,14 +1,29 @@
+# Dependencias Node.js
 node_modules/
-.env
-.env.local
-.DS_Store
+npm-debug.log*
+
+# Compilados de Maven / Java
+target/
+backend/target/
+microservicio-jpa/target/
+*.class
+*.jar
+*.war
+
+# Salidas de compilación Frontend
 dist/
 build/
-uploads/
-*.log
+
+# Archivos de entorno y variables locales
+.env
+.env.local
+
+# Archivos de IDE y Editores de Código
 .idea/
-target/
-*.jar
+.vscode/
+.DS_Store
+
+# Archivos de logs y temporales
+*.log
+uploads/
 test.json
-microservicio-jpa/target/
-backend/target/
