@@ -41,12 +41,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- Spring Data MongoDB (PLUS REQUERIDO) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
         <!-- JDBC Template -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

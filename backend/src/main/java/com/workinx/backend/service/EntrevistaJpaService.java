@@ -1,8 +1,6 @@
 package com.workinx.backend.service;
 
 import com.workinx.backend.entity.EntrevistaEntity;
-import com.workinx.backend.mongo.AuditLogMongo;
-import com.workinx.backend.mongo.AuditLogMongoRepository;
 import com.workinx.backend.repository.EntrevistaJpaRepository;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Servicio de negocio JPA para la tabla Entrevistas (Alta velocidad & rendimiento).
@@ -24,7 +21,6 @@ import java.util.concurrent.CompletableFuture;
  * RETO 1: Búsquedas AND / OR
  * RETO 3: Logs INFO, WARN, ERROR
  * RETO 5: Paginación
- * PLUS:   Auditoría MongoDB Asíncrona (0ms de latencia)
  *
  * @author Equipo WorkInX - SENA ADSO 2026
  */
@@ -40,9 +36,6 @@ public class EntrevistaJpaService {
     // Caché en memoria para optimizar lecturas de FK
     private Long cachedEmpresaId = null;
     private Long cachedCategoriaId = null;
-
-    @Autowired(required = false)
-    private AuditLogMongoRepository mongoAuditRepo;
 
     @Autowired
     public EntrevistaJpaService(EntrevistaJpaRepository repository, JdbcTemplate jdbcTemplate) {
@@ -103,7 +96,6 @@ public class EntrevistaJpaService {
         asegurarCamposNoNulos(entrevista);
 
         EntrevistaEntity creada = repository.save(entrevista);
-        auditMongoAsync("CREAR", String.valueOf(creada.getId()), "Entrevista creada: " + creada.getTitulo(), ip);
         return creada;
     }
 
@@ -124,7 +116,6 @@ public class EntrevistaJpaService {
 
         EntrevistaEntity actualizada = repository.save(existente);
         log.info("ℹ️ INFO: Entrevista ID {} actualizada", id);
-        auditMongoAsync("ACTUALIZAR", String.valueOf(id), "Entrevista actualizada: " + actualizada.getTitulo(), ip);
         return actualizada;
     }
 
@@ -137,7 +128,6 @@ public class EntrevistaJpaService {
         }
         repository.deleteById(id);
         log.info("ℹ️ INFO: Entrevista ID {} eliminada", id);
-        auditMongoAsync("ELIMINAR", String.valueOf(id), "Entrevista eliminada ID: " + id, ip);
     }
 
     private void asegurarCamposNoNulos(EntrevistaEntity entrevista) {
@@ -181,19 +171,5 @@ public class EntrevistaJpaService {
         } catch (Exception ignored) {}
         cachedCategoriaId = 1L;
         return 1L;
-    }
-
-    /** Auditoría MongoDB ASÍNCRONA: No congela el hilo HTTP principal ni retrasa la respuesta */
-    private void auditMongoAsync(String accion, String entidadId, String detalles, String ip) {
-        if (mongoAuditRepo != null) {
-            CompletableFuture.runAsync(() -> {
-                try {
-                    mongoAuditRepo.save(new AuditLogMongo(accion, "EntrevistaEntity", entidadId, detalles, ip));
-                    log.info("🍃 MONGO ASYNC: Auditoría guardada [{}]", accion);
-                } catch (Exception e) {
-                    log.warn("⚠️ MONGO ASYNC: Servidor NoSQL no disponible, auditoría omitida silenciosamente.");
-                }
-            });
-        }
     }
 }
