@@ -172,7 +172,7 @@ public class CategoriaEmpleoJpaController {
     /**
      * Elimina una categoría de empleo del sistema por su identificador primario.
      * <p>
-     * Registra el evento de eliminación en los logs del servidor y en la auditoría MongoDB.
+     * Registra el evento de eliminación en los logs del servidor.
      * </p>
      *
      * @param id      Identificador primario de la categoría a eliminar.

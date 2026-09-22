@@ -8,7 +8,6 @@
  * 4. 5 validaciones con anotaciones en la entidad (@Valid)
  * 5. Paginación interactiva con JPA Repository Pageable
  * MILLA EXTRA: Rate Limiting (60 req/min) y Anti-SQLi / Exploits
- * PLUS: Auditoría NoSQL en MongoDB
  * @author Equipo WorkInX - SENA ADSO 2026
  */
 
@@ -143,7 +142,7 @@ export default function CategoriasJpaCrud() {
       if (idEditando) {
         // Actualización de registro existente
         await categoriasJpaService.actualizar(idEditando, { nombre, descripcion, activa });
-        setMensajeExito(`Categoría ID ${idEditando} actualizada con éxito (Auditado en Mongo & JPA).`);
+        setMensajeExito(`Categoría ID ${idEditando} actualizada con éxito en JPA.`);
       } else {
         // Creación de nuevo registro
         await categoriasJpaService.crear({ nombre, descripcion, activa });
@@ -209,17 +208,14 @@ export default function CategoriasJpaCrud() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight flex items-center gap-2 text-indigo-300">
-              🚀 RETOS SENA ADSO: Microservicio JPA + MongoDB + Paginación
+              🚀 RETOS SENA ADSO: Microservicio JPA + Paginación
             </h1>
             <p className="text-slate-300 text-sm mt-1">
               Servidor 2 (<code className="text-amber-400 font-mono">http://localhost:8081</code>) | 
-              Spring Data JPA + MongoDB + Rate Limiting + Anti-SQLi
+              Spring Data JPA + Rate Limiting + Anti-SQLi
             </p>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-semibold">
-            <span className="bg-emerald-800 text-emerald-200 px-3 py-1 rounded-full border border-emerald-600">
-              🍃 PLUS: Mongo Audit
-            </span>
             <span className="bg-amber-800 text-amber-200 px-3 py-1 rounded-full border border-amber-600">
               ⚡ Rate Limit (60/min)
             </span>

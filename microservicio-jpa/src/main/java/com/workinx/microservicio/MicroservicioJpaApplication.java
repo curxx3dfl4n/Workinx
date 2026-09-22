@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <p>
  * Este servicio fue diseñado e implementado en el marco del proyecto formativo WorkInX
  * para responder a los requerimientos técnicos del SENA, permitiendo que el monolito/aplicación
- * principal consuma de forma desacoplada un API RESTful respaldado por Spring Data JPA y MongoDB.
- * Gestiona de manera autónoma el ciclo de vida, persistencia y auditoría de categorías de empleo.
+ * principal consuma de forma desacoplada un API RESTful respaldado por Spring Data JPA.
+ * Gestiona de manera autónoma el ciclo de vida y persistencia de categorías de empleo.
  * </p>
  *
  * @author Equipo WorkInX - SENA ADSO 2026
@@ -24,7 +24,7 @@ public class MicroservicioJpaApplication {
      * Método de arranque principal de la aplicación Spring Boot.
      * <p>
      * Inicializa el contenedor de inversión de control (IoC), escanea los componentes,
-     * configura la conexión a la base de datos relacional y MongoDB, y levanta el servidor
+     * configura la conexión a la base de datos relacional y levanta el servidor
      * web embebido (Tomcat) en el puerto configurado (8081 por defecto).
      * </p>
      *

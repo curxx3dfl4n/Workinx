@@ -16,7 +16,7 @@
     <artifactId>backend</artifactId>
     <version>1.0.0</version>
     <name>WorkInX Backend</name>
-    <description>Plataforma de conexion laboral - Backend Spring Boot (JdbcTemplate + Spring Data JPA + MongoDB)</description>
+    <description>Plataforma de conexion laboral - Backend Spring Boot (JdbcTemplate + Spring Data JPA)</description>
 
     <properties>
         <java.version>21</java.version>
