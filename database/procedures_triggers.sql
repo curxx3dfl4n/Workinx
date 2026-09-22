@@ -1,3 +1,13 @@
+-- =====================================================================
+-- WORKINX DATABASE - PROCEDIMIENTOS Y TRIGGERS AUTOMÁTICOS
+-- Proyecto Formativo SENA ADSO 2026
+-- =====================================================================
+
+-- ---------------------------------------------------------------------
+-- Trigger 1: trg_entrevistas_fecha_edicion
+-- Propósito: Actualiza la fecha_edicion al timestamp actual cuando
+--            se modifica cualquier dato descriptivo de la entrevista.
+-- ---------------------------------------------------------------------
 DELIMITER $$
 CREATE TRIGGER `trg_entrevistas_fecha_edicion` BEFORE UPDATE ON `entrevistas` FOR EACH ROW BEGIN
     IF NOT (OLD.titulo <=> NEW.titulo)
@@ -19,6 +29,11 @@ END
 $$
 DELIMITER ;
 
+-- ---------------------------------------------------------------------
+-- Trigger 2: trg_desactivar_entrevista_por_reportes
+-- Propósito: Regla de moderación comunitaria. Si una oferta acumula 3
+--            o más reportes activos, se desactiva y pausa automáticamente.
+-- ---------------------------------------------------------------------
 DELIMITER $$
 CREATE TRIGGER `trg_desactivar_entrevista_por_reportes` AFTER INSERT ON `reportes_entrevistas` FOR EACH ROW BEGIN
     DECLARE total_reportes_activos INT;
@@ -39,6 +54,11 @@ END
 $$
 DELIMITER ;
 
+-- ---------------------------------------------------------------------
+-- Trigger 3: trg_reportes_fecha_resolucion
+-- Propósito: Establece la marca de tiempo de resolución de un reporte
+--            cuando su estado cambia a 'resuelto' o 'rechazado'.
+-- ---------------------------------------------------------------------
 DELIMITER $$
 CREATE TRIGGER `trg_reportes_fecha_resolucion` BEFORE UPDATE ON `reportes_entrevistas` FOR EACH ROW BEGIN
     IF OLD.estado <> NEW.estado
