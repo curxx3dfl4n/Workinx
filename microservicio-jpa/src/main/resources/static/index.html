@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microservicio JPA - Categorías de Empleo | WorkInX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple-50: #faf5ff;
+      --purple-100: #f3e8ff;
+      --purple-200: #e9d5ff;
+      --purple-300: #d8b4fe;
+      --purple-400: #c084fc;
+      --purple-500: #a855f7;
+      --purple-600: #9333ea;
+      --purple-700: #7c3aed;
+      --purple-800: #6b21a8;
+      --purple-900: #581c87;
+      --purple-950: #2e1065;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: #fdfaff;
+      color: var(--slate-800);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Hero Banner Morado */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--purple-950) 0%, var(--purple-800) 45%, var(--purple-700) 100%);
+      border-radius: 20px;
+      padding: 30px;
+      color: #ffffff;
+      box-shadow: 0 16px 36px -10px rgba(109, 40, 217, 0.45);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(216, 180, 254, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-subtitle {
+      color: var(--purple-200);
+      font-size: 0.92rem;
+      margin-top: 6px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .badge-chip {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Tarjetas */
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      border: 1.5px solid var(--purple-100);
+      box-shadow: 0 4px 20px -2px rgba(109, 40, 217, 0.06);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--purple-100);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--purple-950);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Formularios */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--purple-900);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background-color: var(--purple-50);
+      border: 1.5px solid var(--purple-200);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--purple-950);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      background-color: #ffffff;
+      border-color: var(--purple-600);
+      box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Botones */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple-600) 0%, var(--purple-700) 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--purple-700) 0%, var(--purple-900) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.45);
+    }
+
+    .btn-secondary {
+      background: var(--purple-100);
+      color: var(--purple-800);
+      border: 1px solid var(--purple-200);
+    }
+
+    .btn-secondary:hover {
+      background: var(--purple-200);
+      color: var(--purple-950);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-danger:hover {
+      background: #fca5a5;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      border-radius: 7px;
+    }
+
+    /* Filtros Box */
+    .filter-box {
+      background: var(--purple-50);
+      border: 1.5px solid var(--purple-200);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    /* Tabla */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.88rem;
+    }
+
+    .data-table th {
+      background: var(--purple-50);
+      color: var(--purple-900);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--purple-200);
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--purple-100);
+      color: var(--slate-700);
+    }
+
+    .data-table tr:hover td {
+      background-color: #faf5ff;
+    }
+
+    /* Badges de Estado */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-active {
+      background: #f3e8ff;
+      color: var(--purple-800);
+      border: 1px solid var(--purple-300);
+    }
+
+    .badge-inactive {
+      background: #f1f5f9;
+      color: var(--slate-600);
+      border: 1px solid var(--slate-300);
+    }
+
+    /* Paginación */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--purple-100);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pagination-info {
+      font-size: 0.82rem;
+      color: var(--purple-800);
+      font-weight: 600;
+    }
+
+    .pagination-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .page-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1.5px solid var(--purple-200);
+      background: #ffffff;
+      color: var(--purple-800);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      background: var(--purple-100);
+      border-color: var(--purple-600);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Toast Alertas */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast-success {
+      background: #fdf4ff;
+      border: 1.5px solid var(--purple-300);
+      color: var(--purple-950);
+    }
+
+    .toast-error {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      color: #9f1239;
+    }
+
+    .toast-close {
+      margin-left: auto;
+      cursor: pointer;
+      font-weight: 800;
+      opacity: 0.6;
+    }
+    .toast-close:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="container">
+    <!-- Header Hero Morado -->
+    <header class="hero-banner">
+      <div class="hero-top">
+        <div>
+          <h1 class="hero-title">
+            <span>💜</span> Microservicio JPA Autónomo (Puerto 8081)
+          </h1>
+          <p class="hero-subtitle">
+            Frontend independiente ubicado en <code>resources/static</code> | Gestión Integral de Categorías JPA
+          </p>
+        </div>
+        <div>
+          <button class="btn btn-secondary btn-sm" onclick="cargarCategorias()">🔄 Recargar Datos</button>
+        </div>
+      </div>
+
+      <div class="hero-badges">
+        <span class="badge-chip">✅ Reto 1: AND (2 campos) / OR (3 campos)</span>
+        <span class="badge-chip">✅ Reto 2: GlobalExceptionHandler (400)</span>
+        <span class="badge-chip">✅ Reto 3: Logs SLF4J</span>
+        <span class="badge-chip">✅ Reto 4: 5 Validaciones @Valid</span>
+        <span class="badge-chip">✅ Reto 5: Paginación JPA (Pageable)</span>
+        <span class="badge-chip">🛡️ Milla Extra: Anti-SQLi & Rate Limit</span>
+      </div>
+    </header>
+
+    <!-- Grid de Trabajo -->
+    <div class="dashboard-grid">
+      <!-- Columna 1: Formulario Crear / Editar -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title" id="formTitle">
+            <span>✨</span> Nueva Categoría
+          </h2>
+          <button id="cancelEditBtn" class="btn btn-secondary btn-sm" style="display:none;" onclick="cancelarEdicion()">✕ Cancelar</button>
+        </div>
+
+        <form id="categoriaForm" onsubmit="guardarCategoria(event)">
+          <input type="hidden" id="catId">
+
+          <div class="form-group">
+            <label class="form-label" for="catNombre">Nombre de la Categoría (*)</label>
+            <input type="text" id="catNombre" class="form-input" placeholder="Ej: Desarrollo de Software" required minlength="3" maxlength="80">
+            <small style="color:var(--slate-400); font-size:0.75rem;">3 a 80 caracteres. Protección Regex anti-scripts.</small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="catDescripcion">Descripción Detallada</label>
+            <textarea id="catDescripcion" class="form-textarea" placeholder="Descripción de las vacantes asociadas..." maxlength="500"></textarea>
+            <small style="color:var(--slate-400); font-size:0.75rem;">Máximo 500 caracteres (@Size).</small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="catActiva">Estado de la Categoría</label>
+            <select id="catActiva" class="form-select">
+              <option value="true">Activa (Disponible)</option>
+              <option value="false">Inactiva (Oculta)</option>
+            </select>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">
+            <span>💾</span> Guardar con Validación JPA
+          </button>
+        </form>
+      </div>
+
+      <!-- Columna 2: Filtros Avanzados y Tabla Paginada -->
+      <div class="card">
+        <!-- Caja de Filtros Reto 1 -->
+        <div class="filter-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--purple-900);">
+              🔍 Búsquedas Especializadas (Reto 1 & 5)
+            </span>
+            <span id="filtroModoBadge" class="badge-chip" style="background:var(--purple-700); font-size:0.68rem;">Modo: Paginación Normal</span>
+          </div>
+
+          <div class="filter-grid">
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Operador / Modo</label>
+              <select id="filtroModo" class="form-select" onchange="cambiarModoFiltro()">
+                <option value="">Paginación Estándar</option>
+                <option value="and">2 Campos con AND (Y)</option>
+                <option value="or">3 Campos con OR (O)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Nombre</label>
+              <input type="text" id="filtroNombre" class="form-input" placeholder="Buscar por nombre...">
+            </div>
+
+            <div id="descFilterDiv">
+              <label class="form-label" style="font-size:0.7rem;">Descripción (OR)</label>
+              <input type="text" id="filtroDesc" class="form-input" placeholder="Buscar por descripción...">
+            </div>
+
+            <div>
+              <label class="form-label" style="font-size:0.7rem;">Estado</label>
+              <select id="filtroActiva" class="form-select">
+                <option value="true">Activa</option>
+                <option value="false">Inactiva</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary btn-sm" onclick="ejecutarFiltro()">🔎 Buscar</button>
+            <button class="btn btn-secondary btn-sm" onclick="limpiarFiltros()">Limpiar</button>
+          </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th style="text-align:right;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="categoriasTbody">
+              <tr>
+                <td colspan="5" style="text-align:center; padding:30px; color:var(--purple-600);">
+                  Cargando categorías desde el Microservicio JPA...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Barra de Paginación Reto 5 -->
+        <div class="pagination-bar">
+          <div class="pagination-info" id="paginationInfo">
+            Mostrando 0 de 0 registros
+          </div>
+          <div class="pagination-actions">
+            <button id="prevBtn" class="page-btn" onclick="cambiarPagina(-1)" disabled>← Anterior</button>
+            <span id="pageIndicator" class="page-btn" style="cursor:default; background:var(--purple-50);">Página 1</span>
+            <button id="nextBtn" class="page-btn" onclick="cambiarPagina(1)" disabled>Siguiente →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api/v1/microservicio/categorias';
+
+    let paginaActual = 0;
+    let tamanoPagina = 5;
+    let totalPaginas = 0;
+    let totalElementos = 0;
+
+    // Cargar al inicio
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarCategorias();
+    });
+
+    async function cargarCategorias() {
+      const modo = document.getElementById('filtroModo').value;
+      const nombre = document.getElementById('filtroNombre').value.trim();
+      const desc = document.getElementById('filtroDesc').value.trim();
+      const activa = document.getElementById('filtroActiva').value;
+
+      let url = `${API_BASE}?page=${paginaActual}&size=${tamanoPagina}`;
+      if (modo) url += `&modo=${modo}`;
+      if (nombre) url += `&nombre=${encodeURIComponent(nombre)}`;
+      if (desc && modo === 'or') url += `&descripcion=${encodeURIComponent(desc)}`;
+      if (activa) url += `&activa=${activa}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.mensaje || err.error || `Error HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        renderTabla(data);
+      } catch (e) {
+        showToast('error', 'Error al consultar categorías: ' + e.message);
+        document.getElementById('categoriasTbody').innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; padding:30px; color:#991b1b;">
+              ❌ No se pudo conectar con el microservicio. Asegúrate de que esté corriendo en el puerto 8081.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function renderTabla(data) {
+      const items = data.content || [];
+      totalPaginas = data.totalPages || 0;
+      totalElementos = data.totalElements || 0;
+
+      const tbody = document.getElementById('categoriasTbody');
+      tbody.innerHTML = '';
+
+      if (items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; padding:30px; color:var(--purple-600);">
+              No se encontraron categorías para los criterios seleccionados.
+            </td>
+          </tr>
+        `;
+      } else {
+        items.forEach(cat => {
+          const tr = document.createElement('tr');
+          const badgeClass = cat.activa !== false ? 'badge-active' : 'badge-inactive';
+          const badgeText = cat.activa !== false ? 'Activa' : 'Inactiva';
+          const descText = cat.descripcion ? (cat.descripcion.length > 55 ? cat.descripcion.substring(0, 52) + '...' : cat.descripcion) : 'Sin descripción';
+
+          tr.innerHTML = `
+            <td style="font-weight:700; color:var(--purple-900);">#${cat.id}</td>
+            <td style="font-weight:600;">${escapeHtml(cat.nombre)}</td>
+            <td style="color:var(--slate-600);">${escapeHtml(descText)}</td>
+            <td><span class="status-badge ${badgeClass}">${badgeText}</span></td>
+            <td style="text-align:right;">
+              <button class="btn btn-secondary btn-sm" onclick='prepararEdicion(${JSON.stringify(cat)})'>✏️</button>
+              <button class="btn btn-danger btn-sm" onclick="eliminarCategoria(${cat.id})">🗑️</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Actualizar Paginación
+      document.getElementById('paginationInfo').innerText = `Página ${totalPaginas > 0 ? paginaActual + 1 : 0} de ${totalPaginas} (Total: ${totalElementos} registros)`;
+      document.getElementById('pageIndicator').innerText = `Pág. ${totalPaginas > 0 ? paginaActual + 1 : 0}`;
+      document.getElementById('prevBtn').disabled = (paginaActual === 0);
+      document.getElementById('nextBtn').disabled = (paginaActual >= totalPaginas - 1);
+    }
+
+    function cambiarPagina(delta) {
+      const nueva = paginaActual + delta;
+      if (nueva >= 0 && nueva < totalPaginas) {
+        paginaActual = nueva;
+        cargarCategorias();
+      }
+    }
+
+    function cambiarModoFiltro() {
+      const modo = document.getElementById('filtroModo').value;
+      const badge = document.getElementById('filtroModoBadge');
+      if (modo === 'and') {
+        badge.innerText = 'Modo: 2 Campos con AND';
+        badge.style.background = '#059669';
+      } else if (modo === 'or') {
+        badge.innerText = 'Modo: 3 Campos con OR';
+        badge.style.background = '#d97706';
+      } else {
+        badge.innerText = 'Modo: Paginación Normal';
+        badge.style.background = 'var(--purple-700)';
+      }
+    }
+
+    function ejecutarFiltro() {
+      paginaActual = 0;
+      cargarCategorias();
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('filtroModo').value = '';
+      document.getElementById('filtroNombre').value = '';
+      document.getElementById('filtroDesc').value = '';
+      document.getElementById('filtroActiva').value = 'true';
+      cambiarModoFiltro();
+      paginaActual = 0;
+      cargarCategorias();
+    }
+
+    async function guardarCategoria(e) {
+      e.preventDefault();
+      const id = document.getElementById('catId').value;
+      const nombre = document.getElementById('catNombre').value.trim();
+      const descripcion = document.getElementById('catDescripcion').value.trim();
+      const activa = document.getElementById('catActiva').value === 'true';
+
+      const payload = { nombre, descripcion, activa };
+      const url = id ? `${API_BASE}/${id}` : API_BASE;
+      const method = id ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          // Captura de errores de validación de GlobalExceptionHandler (Reto 2 y 4)
+          if (data.detalles) {
+            const erroresStr = Object.entries(data.detalles).map(([campo, msg]) => `• ${campo}: ${msg}`).join('\n');
+            throw new Error(`Errores de validación @Valid:\n${erroresStr}`);
+          }
+          throw new Error(data.mensaje || data.error || `Fallo con estado ${res.status}`);
+        }
+
+        showToast('success', id ? `Categoría ID ${id} actualizada correctamente.` : 'Nueva categoría creada exitosamente con validaciones.');
+        cancelarEdicion();
+        cargarCategorias();
+      } catch (err) {
+        showToast('error', err.message);
+      }
+    }
+
+    function prepararEdicion(cat) {
+      document.getElementById('catId').value = cat.id;
+      document.getElementById('catNombre').value = cat.nombre;
+      document.getElementById('catDescripcion').value = cat.descripcion || '';
+      document.getElementById('catActiva').value = cat.activa !== false ? 'true' : 'false';
+
+      document.getElementById('formTitle').innerHTML = `<span>✏️</span> Editar Categoría #${cat.id}`;
+      document.getElementById('submitBtn').innerHTML = `<span>💾</span> Guardar Cambios`;
+      document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelarEdicion() {
+      document.getElementById('catId').value = '';
+      document.getElementById('categoriaForm').reset();
+      document.getElementById('formTitle').innerHTML = `<span>✨</span> Nueva Categoría`;
+      document.getElementById('submitBtn').innerHTML = `<span>💾</span> Guardar con Validación JPA`;
+      document.getElementById('cancelEditBtn').style.display = 'none';
+    }
+
+    async function eliminarCategoria(id) {
+      if (!confirm(`¿Estás seguro de eliminar la categoría ID ${id} en el Microservicio JPA?`)) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          throw new Error(data.mensaje || data.error || `Error HTTP ${res.status}`);
+        }
+
+        showToast('success', `Categoría ID ${id} eliminada exitosamente.`);
+        cargarCategorias();
+      } catch (err) {
+        showToast('error', 'No se pudo eliminar: ' + err.message);
+      }
+    }
+
+    function showToast(tipo, mensaje) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${tipo === 'success' ? 'toast-success' : 'toast-error'}`;
+      toast.innerHTML = `
+        <span>${tipo === 'success' ? '💜' : '⚠️'}</span>
+        <div style="flex:1; white-space:pre-line;">${escapeHtml(mensaje)}</div>
+        <span class="toast-close" onclick="this.parentElement.remove()">✕</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 6000);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>

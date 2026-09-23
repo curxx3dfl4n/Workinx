@@ -58,8 +58,8 @@ function Header() {
         <Link to="/">Inicio</Link>
         <a href="/#quienes-somos">Quiénes somos</a>
         <a href="/#mision-vision">Misión y visión</a>
-        <Link to="/entrevistas">Entrevistas</Link>
-        <Link to="/reto-jpa" style={{ color: '#f59e0b', fontWeight: 'bold' }}>Reto JPA</Link>
+        <Link to="/reto-jpa" style={{ color: '#f59e0b', fontWeight: 'bold' }}>Entrevistas JPA</Link>
+        <a href="http://localhost:8081" target="_blank" rel="noopener noreferrer" style={{ color: '#a855f7', fontWeight: 'bold' }}>Microservicio JPA (8081)</a>
 
         {!isAuthenticated ? (
           <>
